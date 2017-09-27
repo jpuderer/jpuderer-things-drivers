@@ -1,0 +1,7 @@
+
+include ':sht1x'
+include ':hpm'
+
+include ':example'
+
+include ':testingutils'
