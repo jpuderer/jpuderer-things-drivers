@@ -14,7 +14,7 @@ where `<version>` matches the last version of the driver available on [jcenter][
 
 ```
 dependencies {
-    implementation 'jpuderer.android.things.drivers:driver-hpm:0.1'
+    implementation 'jpuderer.android.things.drivers:driver-hpm:0.2'
     ...
 }
 ```

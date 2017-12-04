@@ -32,6 +32,6 @@ Current drivers
 Driver | Type | Usage (add to your gradle dependencies) | Note
 :---:|:---:| --- | ---
 [driver-sht1x](sht1x) | temperature and humidity sensor | `jpuderer.android.things.drivers:driver-sht1x:0.1` | [sample](https://github.com/jpuderer/jpuderer-things-drivers/tree/master/example) [changelog](sht1x/CHANGELOG.md)
-[driver-hpm](hpm) | Honeywell Particle Sensor | `jpuderer.android.things.drivers:driver-hpm:0.1` | [sample](https://github.com/jpuderer/jpuderer-things-drivers/tree/master/example) [changelog](hpm/CHANGELOG.md)
+[driver-hpm](hpm) | Honeywell Particle Sensor | `jpuderer.android.things.drivers:driver-hpm:0.2` | [sample](https://github.com/jpuderer/jpuderer-things-drivers/tree/master/example) [changelog](hpm/CHANGELOG.md)
 <!-- DRIVER_LIST_END -->
 

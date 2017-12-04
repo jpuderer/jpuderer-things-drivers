@@ -31,6 +31,5 @@ dependencies {
     implementation 'jpuderer.android.things.drivers:driver-sht1x:0.1'
 
     //implementation project(path: ':hpm')
-    implementation 'jpuderer.android.things.drivers:driver-hpm:0.1'
-
+    implementation 'jpuderer.android.things.drivers:driver-hpm:0.2'
 }
