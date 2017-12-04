@@ -209,7 +209,7 @@ public class Sht1xSensor implements AutoCloseable {
         return mHumidity;
     }
 
-    private  void doMeasurements() {
+    private void doMeasurements() {
         final Object timeoutToken = new Object();
 
         final GpioCallback gpioCallback = new GpioCallback() {

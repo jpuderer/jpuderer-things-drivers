@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
 
     // Handler for posting runnables to
     Handler mHandler;
+
     // Token for finding our delayed runnable to perform a sampling
     Object mDoSampleToken = new Object();
 
@@ -110,14 +111,6 @@ public class MainActivity extends Activity {
 
         Log.d(TAG, "Starting data collection...");
         startDataCollection();
-
-        PeripheralManagerService manager = new PeripheralManagerService();
-        List<String> deviceList = manager.getUartDeviceList();
-        if (deviceList.isEmpty()) {
-            Log.i(TAG, "No UART port available on this device.");
-        } else {
-            Log.i(TAG, "List of available devices: " + deviceList);
-        }
     }
 
     @Override
@@ -180,7 +173,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    // Regularly (every SAMPLE_INTERVAL_MS) record sensor values to the database
     private void startDataCollection() {
         final Runnable doDataCollection = new Runnable() {
             private boolean toOld(long timestamp) {
@@ -189,7 +181,6 @@ public class MainActivity extends Activity {
 
             @Override
             public void run() {
-                // Record a null reading if the sensor data is too old.
                 Float temperature = toOld(mSensorData.temperature_timestamp) ?
                         null : mSensorData.temperature;
                 Float humidity = toOld(mSensorData.humidity_timestamp) ?
@@ -199,9 +190,8 @@ public class MainActivity extends Activity {
                 Integer pm10 = toOld(mSensorData.particle_timestamp) ?
                         null : mSensorData.pm10;
 
-                Log.d(TAG, String.format("Logged\n" +
-                                "\tTimestamp: %d\n" +
-                                "\tTemperature: %.1f, Humidity: %.1f%%, Pressure: %.1fhPa\n" +
+                Log.d(TAG, String.format("Timestamp: %d\n" +
+                                "\tTemperature: %.1f, Humidity: %.1f%%\n" +
                                 "\tPM2.5, PM10: %d, %d\n",
                         System.currentTimeMillis(),
                         temperature,

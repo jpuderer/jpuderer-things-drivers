@@ -13,6 +13,8 @@ import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
 
+import java.lang.Byte;
+
 public class HpmSensor implements AutoCloseable {
     private static final String TAG = HpmSensor.class.getSimpleName();
 
@@ -26,6 +28,8 @@ public class HpmSensor implements AutoCloseable {
     private static final short RESPONSE_DATA_FRAME = (short) 0x424d;
 
     private static final int LENGTH_DATA_FRAME = 32;
+
+    private static final boolean DEBUG = false;
 
     public static final long HPM_MEASUREMENT_INTERVAL = TimeUnit.SECONDS.toMicros(1);
 
@@ -78,6 +82,17 @@ public class HpmSensor implements AutoCloseable {
         mDevice.setStopBits(1);
     }
 
+    private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
     @Override
     public void close() throws Exception {
         try {
@@ -88,9 +103,10 @@ public class HpmSensor implements AutoCloseable {
     }
 
     public void start() throws IOException {
+        if (DEBUG) Log.d(TAG, "Start");
         if (mStarted) return;
 
-        // Keep and exception, in case data is requested before it is availble;
+        // Keep an exception, in case data is requested before it is available;
         mLastException = new IOException("No data available");
 
         // Begin listening for interrupt events
@@ -98,21 +114,24 @@ public class HpmSensor implements AutoCloseable {
 
         // Turn on autosend (to get regular sensor readings)
         sendCommand(CMD_START_PARTICLE_MEASUREMENT);
-        SystemClock.sleep(1);
+        SystemClock.sleep(20);
         sendCommand(CMD_ENABLE_AUTO_SEND);
         mStarted = true;
     }
 
     public void stop() throws IOException {
+        if (DEBUG) Log.d(TAG, "Stop");
         if (mDevice == null) return;
+        // FIXME: If I stop the sensor, it doesn't seem to turn back on.
         sendCommand(CMD_STOP_PARTICLE_MEASUREMENT);
-        SystemClock.sleep(1);
+        SystemClock.sleep(20);
         sendCommand(CMD_STOP_AUTO_SEND);
         mDevice.unregisterUartDeviceCallback(mUartCallback);
         mStarted = false;
     }
 
     private void sendCommand(byte[] command) throws IOException {
+        if (DEBUG) Log.d(TAG, "sendCommand");
         int count = mDevice.write(command, command.length);
     }
 
@@ -156,6 +175,7 @@ public class HpmSensor implements AutoCloseable {
                 mMessageBuffer.clear();
             } else if (word == RESPONSE_ACK_ERROR) {
                 Log.w(TAG, "Received ERROR command response from sensor.");
+                mMessageBuffer.clear();
             } else {
                 // Ignore bytes.  Empty buffer.
                 Log.w(TAG, "Ignoring unexpected bytes from sensor.");
@@ -178,18 +198,20 @@ public class HpmSensor implements AutoCloseable {
     }
 
     void processDataFrame(byte[] dataframe) {
-        int checksum = (dataframe[30] << 8) + dataframe[31];
+        if (DEBUG) Log.d(TAG, "dataframe: " + bytesToHex(dataframe));
+
+        int checksum = (Byte.toUnsignedInt(dataframe[30]) << 8) + Byte.toUnsignedInt(dataframe[31]);
         int calculatedChecksum = 0;
         for (int i = 0; i < 30; i++) {
-            calculatedChecksum += dataframe[i];
+            calculatedChecksum += Byte.toUnsignedInt(dataframe[i]);
         }
         if (checksum != calculatedChecksum) {
             Log.e(TAG, "Checksum error in data frame.  Ignoring.");
             return;
         }
         // Assign PM2.5 and PM10 values
-        mPm25 = (dataframe[6] << 8) + dataframe[7];
-        mPm10 = (dataframe[8] << 8) + dataframe[9];
+        mPm25 = (Byte.toUnsignedInt(dataframe[6]) << 8) + Byte.toUnsignedInt(dataframe[7]);
+        mPm10 = (Byte.toUnsignedInt(dataframe[8]) << 8) + Byte.toUnsignedInt(dataframe[9]);
 
         // Clear exception
         mLastException = null;

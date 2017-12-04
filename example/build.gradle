@@ -25,12 +25,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compileOnly 'com.google.android.things:androidthings:+'
-
-    implementation 'com.google.android.things.contrib:driver-gps:0.4'
-    implementation 'com.google.android.things.contrib:driver-bmx280:0.4'
-
-    implementation 'org.msgpack:msgpack-core:0.8.13'
     implementation 'com.android.support:support-annotations:25.4.0'
-    implementation project(path: ':sht1x')
-    implementation project(path: ':hpm')
+
+    //implementation project(path: ':sht1x')
+    implementation 'jpuderer.android.things.drivers:driver-sht1x:0.1'
+
+    //implementation project(path: ':hpm')
+    implementation 'jpuderer.android.things.drivers:driver-hpm:0.1'
+
 }
