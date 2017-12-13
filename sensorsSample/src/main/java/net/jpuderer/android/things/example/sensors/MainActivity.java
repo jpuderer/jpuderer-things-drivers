@@ -1,4 +1,4 @@
-package net.jpuderer.android.things.example;
+package net.jpuderer.android.things.example.sensors;
 
 import android.app.Activity;
 import android.content.Context;

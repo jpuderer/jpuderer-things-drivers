@@ -1,5 +1,7 @@
 
 include ':sht1x'
+include ':ds3231'
 include ':hpm'
 
-include ':example'
+include ':sensorsSample'
+include ':rtcSample'

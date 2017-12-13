@@ -33,5 +33,6 @@ Driver | Type | Usage (add to your gradle dependencies) | Note
 :---:|:---:| --- | ---
 [driver-sht1x](sht1x) | temperature and humidity sensor | `jpuderer.android.things.drivers:driver-sht1x:0.1` | [sample](https://github.com/jpuderer/jpuderer-things-drivers/tree/master/example) [changelog](sht1x/CHANGELOG.md)
 [driver-hpm](hpm) | Honeywell Particle Sensor | `jpuderer.android.things.drivers:driver-hpm:0.2` | [sample](https://github.com/jpuderer/jpuderer-things-drivers/tree/master/example) [changelog](hpm/CHANGELOG.md)
+[driver-ds3231](ds3231) | DS3231 RTC Module | `jpuderer.android.things.drivers:driver-ds3231:0.1` | [sample](https://github.com/jpuderer/jpuderer-things-drivers/tree/master/rtcSample) [changelog](ds3231/CHANGELOG.md)
 <!-- DRIVER_LIST_END -->
 
