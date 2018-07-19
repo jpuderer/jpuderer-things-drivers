@@ -1,0 +1,16 @@
+{
+    "title": "DS3231",
+    "category": "realtime clock",
+    "published-maven": {
+        "maven-url": "https://bintray.com",
+        "groupid": "jpuderer.android.things.drivers",
+        "artifactid": "driver-ds3231"
+    },
+    "compatible-with": [
+        {
+            "title": "Adafruit DS3231 Breakout",
+            "url": "https://www.adafruit.com/product/3013",
+            "photo": "https://cdn-shop.adafruit.com/970x728/3013-01.jpg"
+        }
+    ]
+}

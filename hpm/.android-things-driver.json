@@ -1,0 +1,16 @@
+{
+    "title": "Honeywell Particle Sensor",
+    "category": "particle sensor",
+    "published-maven": {
+        "maven-url": "https://bintray.com",
+        "groupid": "jpuderer.android.things.drivers",
+        "artifactid": "driver-hpm"
+    },
+    "compatible-with": [
+        {
+            "title": "HPM Series",
+            "url": "https://sensing.honeywell.com/sensors/particle-sensors",
+            "photo": "https://sensing.honeywell.com/multimedia/S_C_Website/redesign/optical/hpm-series-hpma115s0-xxx-highres-photo_150x150.png"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "title": "SHT1x",
+    "category": "temperature and humidity sensor",
+    "published-maven": {
+        "maven-url": "https://bintray.com",
+        "groupid": "jpuderer.android.things.drivers",
+        "artifactid": "driver-sht1x"
+    },
+    "compatible-with": [
+        {
+            "title": "SHT1x",
+            "url": "https://www.sensirion.com/en/environmental-sensors/humidity-sensors/digital-humidity-sensors-for-accurate-measurements/",
+            "photo": "https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Pictures/1_Products/Humidity_Sensors/Sensirion_Humidity_Sensors_SHT1x.png"
+        }
+    ]
+}
