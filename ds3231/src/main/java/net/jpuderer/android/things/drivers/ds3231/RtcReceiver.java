@@ -50,7 +50,7 @@ public class RtcReceiver extends BroadcastReceiver {
                     // Otherwise, set the RTC using the system time if the system time appears sane
                     if (isSaneTimestamp(rtcTimestamp)) {
                         Log.i(TAG, "Setting system clock using RTC");
-                        TimeManager timeManager = new TimeManager();
+                        TimeManager timeManager = TimeManager.getInstance();
                         timeManager.setTime(rtcTimestamp);
 
                         // Re-enable NTP updates.  The call to setTime() disables them automatically,

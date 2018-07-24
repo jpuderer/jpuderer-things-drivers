@@ -12,14 +12,11 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.google.android.things.pio.PeripheralManagerService;
-
 import net.jpuderer.android.things.drivers.hpm.HpmSensorDriver;
 import net.jpuderer.android.things.drivers.sht1x.Sht1xSensorDriver;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 
 public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getSimpleName();

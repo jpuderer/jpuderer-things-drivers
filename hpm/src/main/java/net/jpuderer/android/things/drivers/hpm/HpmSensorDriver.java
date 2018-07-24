@@ -5,9 +5,9 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.google.android.things.userdriver.UserDriverManager;
-import com.google.android.things.userdriver.UserSensor;
-import com.google.android.things.userdriver.UserSensorDriver;
-import com.google.android.things.userdriver.UserSensorReading;
+import com.google.android.things.userdriver.sensor.UserSensor;
+import com.google.android.things.userdriver.sensor.UserSensorDriver;
+import com.google.android.things.userdriver.sensor.UserSensorReading;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -88,7 +88,7 @@ public class HpmSensorDriver implements AutoCloseable {
 
         if (mUserDriver == null) {
             mUserDriver = new ParticleCountUserDriver();
-            UserDriverManager.getManager().registerSensor(mUserDriver.getUserSensor());
+            UserDriverManager.getInstance().registerSensor(mUserDriver.getUserSensor());
         }
     }
 
@@ -97,7 +97,7 @@ public class HpmSensorDriver implements AutoCloseable {
      */
     public void unregisterParticleSensor() {
         if (mUserDriver != null) {
-            UserDriverManager.getManager().unregisterSensor(mUserDriver.getUserSensor());
+            UserDriverManager.getInstance().unregisterSensor(mUserDriver.getUserSensor());
             mUserDriver = null;
         }
     }
@@ -110,9 +110,8 @@ public class HpmSensorDriver implements AutoCloseable {
         }
     }
 
-    private class ParticleCountUserDriver extends UserSensorDriver {
+    private class ParticleCountUserDriver implements UserSensorDriver {
         private static final int DRIVER_VERSION = 1;
-        private static final String DRIVER_REQUIRED_PERMISSION = "";
 
         private boolean mEnabled;
         private UserSensor mUserSensor;
@@ -130,7 +129,6 @@ public class HpmSensorDriver implements AutoCloseable {
                         .setResolution(HpmSensor.HPM_PARTICLE_RESOLUTION)
                         .setPower(HpmSensor.HPM_POWER_CONSUMPTION_UA)
                         .setMinDelay(DRIVER_MIN_DELAY_US)
-                        .setRequiredPermission(DRIVER_REQUIRED_PERMISSION)
                         .setMaxDelay(DRIVER_MAX_DELAY_US)
                         .setUuid(UUID.randomUUID())
                         .setDriver(this)

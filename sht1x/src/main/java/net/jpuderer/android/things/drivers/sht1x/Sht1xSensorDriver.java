@@ -3,9 +3,9 @@ package net.jpuderer.android.things.drivers.sht1x;
 import android.hardware.Sensor;
 
 import com.google.android.things.userdriver.UserDriverManager;
-import com.google.android.things.userdriver.UserSensor;
-import com.google.android.things.userdriver.UserSensorDriver;
-import com.google.android.things.userdriver.UserSensorReading;
+import com.google.android.things.userdriver.sensor.UserSensor;
+import com.google.android.things.userdriver.sensor.UserSensorDriver;
+import com.google.android.things.userdriver.sensor.UserSensorReading;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -83,7 +83,7 @@ public class Sht1xSensorDriver implements AutoCloseable {
 
         if (mTemperatureUserDriver == null) {
             mTemperatureUserDriver = new TemperatureUserDriver();
-            UserDriverManager.getManager().registerSensor(mTemperatureUserDriver.getUserSensor());
+            UserDriverManager.getInstance().registerSensor(mTemperatureUserDriver.getUserSensor());
         }
     }
 
@@ -98,7 +98,7 @@ public class Sht1xSensorDriver implements AutoCloseable {
 
         if (mHumidityUserDriver == null) {
             mHumidityUserDriver = new HumidityUserDriver();
-            UserDriverManager.getManager().registerSensor(mHumidityUserDriver.getUserSensor());
+            UserDriverManager.getInstance().registerSensor(mHumidityUserDriver.getUserSensor());
         }
     }
 
@@ -107,7 +107,7 @@ public class Sht1xSensorDriver implements AutoCloseable {
      */
     public void unregisterTemperatureSensor() {
         if (mTemperatureUserDriver != null) {
-            UserDriverManager.getManager().unregisterSensor(mTemperatureUserDriver.getUserSensor());
+            UserDriverManager.getInstance().unregisterSensor(mTemperatureUserDriver.getUserSensor());
             mTemperatureUserDriver = null;
         }
     }
@@ -117,7 +117,7 @@ public class Sht1xSensorDriver implements AutoCloseable {
      */
     public void unregisterHumiditySensor() {
         if (mHumidityUserDriver != null) {
-            UserDriverManager.getManager().unregisterSensor(mHumidityUserDriver.getUserSensor());
+            UserDriverManager.getInstance().unregisterSensor(mHumidityUserDriver.getUserSensor());
             mHumidityUserDriver = null;
         }
     }
@@ -131,9 +131,8 @@ public class Sht1xSensorDriver implements AutoCloseable {
         }
     }
 
-    private class TemperatureUserDriver extends UserSensorDriver {
+    private class TemperatureUserDriver implements UserSensorDriver {
         private static final int DRIVER_VERSION = 1;
-        private static final String DRIVER_REQUIRED_PERMISSION = "";
 
         private boolean mEnabled;
         private UserSensor mUserSensor;
@@ -149,7 +148,6 @@ public class Sht1xSensorDriver implements AutoCloseable {
                         .setResolution(Sht1xSensor.SHT1X_TEMPERATURE_RESOLUTION)
                         .setPower(Sht1xSensor.SHT1X_POWER_CONSUMPTION_UA)
                         .setMinDelay(DRIVER_MIN_DELAY_US)
-                        .setRequiredPermission(DRIVER_REQUIRED_PERMISSION)
                         .setMaxDelay(DRIVER_MAX_DELAY_US)
                         .setUuid(UUID.randomUUID())
                         .setDriver(this)
@@ -174,9 +172,8 @@ public class Sht1xSensorDriver implements AutoCloseable {
         }
     }
 
-    private class HumidityUserDriver extends UserSensorDriver {
+    private class HumidityUserDriver implements UserSensorDriver {
         private static final int DRIVER_VERSION = 1;
-        private static final String DRIVER_REQUIRED_PERMISSION = "";
 
         private boolean mEnabled;
         private UserSensor mUserSensor;
@@ -192,7 +189,6 @@ public class Sht1xSensorDriver implements AutoCloseable {
                         .setResolution(Sht1xSensor.SHT1X_HUMIDITY_RESOLUTION)
                         .setPower(Sht1xSensor.SHT1X_POWER_CONSUMPTION_UA)
                         .setMinDelay(DRIVER_MIN_DELAY_US)
-                        .setRequiredPermission(DRIVER_REQUIRED_PERMISSION)
                         .setMaxDelay(DRIVER_MAX_DELAY_US)
                         .setUuid(UUID.randomUUID())
                         .setDriver(this)

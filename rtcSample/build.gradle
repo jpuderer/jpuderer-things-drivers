@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
 
 
     defaultConfig {
         applicationId "example.things.android.jpuderer.net.rtcsample"
-        minSdkVersion 26
-        targetSdkVersion 26
+        minSdkVersion 27
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
 
@@ -30,7 +30,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compileOnly 'com.google.android.things:androidthings:+'
+    compileOnly 'com.google.android.things:androidthings:1.0'
 
     //implementation project(path: ':ds3231')
     implementation 'jpuderer.android.things.drivers:driver-ds3231:0.1'

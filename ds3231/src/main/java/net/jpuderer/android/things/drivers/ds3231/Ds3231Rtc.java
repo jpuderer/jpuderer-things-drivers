@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.android.things.device.TimeManager;
 import com.google.android.things.pio.I2cDevice;
-import com.google.android.things.pio.PeripheralManagerService;
+import com.google.android.things.pio.PeripheralManager;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -29,7 +29,7 @@ public class Ds3231Rtc implements AutoCloseable {
     public Ds3231Rtc(String i2cDeviceName) throws IOException {
         // Attempt to access the I2C device
         try {
-            PeripheralManagerService manager = new PeripheralManagerService();
+            PeripheralManager manager = PeripheralManager.getInstance();
             mDevice = manager.openI2cDevice(i2cDeviceName, I2C_ADDRESS);
         } catch (IOException e) {
             Log.e(TAG, "Unable to access I2C device", e);
@@ -54,7 +54,7 @@ public class Ds3231Rtc implements AutoCloseable {
         byte[] data = new byte[7];
         mDevice.readRegBuffer(DS3231_TIME_REGS, data, data.length);
 
-        TimeManager timeManager = new TimeManager();
+        TimeManager timeManager = TimeManager.getInstance();
 
         int second = bcdToDec(data[0]);
         int minute = bcdToDec(data[1]);

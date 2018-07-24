@@ -7,7 +7,7 @@ import android.os.SystemClock;
 
 import com.google.android.things.pio.Gpio;
 import com.google.android.things.pio.GpioCallback;
-import com.google.android.things.pio.PeripheralManagerService;
+import com.google.android.things.pio.PeripheralManager;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -57,7 +57,7 @@ public class Sht1xSensor implements AutoCloseable {
     // both temperature and humidity sensors, the consumption is counted twice.
     public static final float SHT1X_POWER_CONSUMPTION_UA = 90;
 
-    private PeripheralManagerService mPeripheralManager;
+    private PeripheralManager mPeripheralManager;
     private Gpio mGpioData;
     private Gpio mGpioSck;
 
@@ -123,7 +123,7 @@ public class Sht1xSensor implements AutoCloseable {
         // Timer for scheduling measurements.
         mTimer = new Timer();
 
-        mPeripheralManager = new PeripheralManagerService();
+        mPeripheralManager = PeripheralManager.getInstance();
         try {
             mGpioData = mPeripheralManager.openGpio(gpioData);
             mGpioData.setActiveType(Gpio.ACTIVE_HIGH);
@@ -248,7 +248,7 @@ public class Sht1xSensor implements AutoCloseable {
             mGpioData.setEdgeTriggerType(Gpio.EDGE_FALLING);
 
             // Register the callback for when data is available
-            mGpioData.registerGpioCallback(gpioCallback, mHandler);
+            mGpioData.registerGpioCallback(mHandler, gpioCallback);
 
             // Set a timeout, in case we don't receive data.
             mHandler.postAtTime(measurementTimeout, timeoutToken,
@@ -313,7 +313,7 @@ public class Sht1xSensor implements AutoCloseable {
             mGpioData.setEdgeTriggerType(Gpio.EDGE_FALLING);
 
             // Register the callback for when data is available
-            mGpioData.registerGpioCallback(gpioCallback, mHandler);
+            mGpioData.registerGpioCallback(mHandler, gpioCallback);
 
             // Set a timeout, in case we don't receive data.
             mHandler.postAtTime(measurementTimeout, timeoutToken,
