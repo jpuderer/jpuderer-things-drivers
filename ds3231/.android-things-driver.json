@@ -2,7 +2,7 @@
     "title": "DS3231",
     "category": "realtime clock",
     "published-maven": {
-        "maven-url": "https://bintray.com",
+        "maven-url": "https://dl.bintray.com/jpuderer/jpuderer-things-drivers",
         "groupid": "jpuderer.android.things.drivers",
         "artifactid": "driver-ds3231"
     },
